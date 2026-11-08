@@ -52,6 +52,31 @@ To uninstall, use **Settings → Apps** in Windows.
 - About 3 GB of free memory when starting.
 - A graphics card is recommended. Integrated graphics work, at a lower resolution.
 
+## Linux
+
+The Linux version runs the same game in Electron, which uses the same Chromium engine as the Windows version, so it looks and plays the same.
+
+**Ubuntu, Debian, Linux Mint, Pop!_OS:** download **ronvsbasilisk_1.0.0_amd64.deb** from [Releases](../../releases), then install it. Double-click it, or run:
+
+```bash
+sudo apt install ./ronvsbasilisk_1.0.0_amd64.deb
+```
+
+Start it from the applications menu, or by running `ronvsbasilisk`. To uninstall: `sudo apt remove ronvsbasilisk`.
+
+**Any other 64-bit distribution:** download **RonVsBasilisk-linux-x64.tar.gz**, then unpack it and start it:
+
+```bash
+tar -xzf RonVsBasilisk-linux-x64.tar.gz
+./RonVsBasilisk/start.sh
+```
+
+Run `./RonVsBasilisk/add-to-menu.sh` to add it to your applications menu.
+
+- **Requirements:** a desktop (X11 or Wayland), about 3 GB of free memory, and a working graphics driver (Mesa for AMD and Intel, or the NVIDIA driver). Without one, the game warns you that it's drawing with the processor and will be slow.
+- **Laptops with two graphics chips:** the menu entry asks for the stronger card automatically.
+- **Extra keys:** F11 switches full screen on and off. Ctrl + Shift + Q quits instantly.
+
 ## Running from source
 
 The game is plain HTML and JavaScript and needs no build step. Open `game/index.html` in Microsoft Edge to play it directly.
@@ -64,17 +89,25 @@ powershell -ExecutionPolicy Bypass -File installer/build.ps1
 
 The installer is written to `dist/RonVsBasilisk-Setup.exe`.
 
+To build the Linux packages, download `electron-v45.2.3-linux-x64.zip` from [Electron's releases](https://github.com/electron/electron/releases/tag/v45.2.3), then run this. It uses the same built-in C# compiler as the installer, so it runs on Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File linux/build.ps1 -ElectronZip "path\to\electron-v45.2.3-linux-x64.zip"
+```
+
+It writes `dist/RonVsBasilisk-linux-x64.tar.gz` and `dist/ronvsbasilisk_1.0.0_amd64.deb`.
+
 ## Project layout
 
 | Folder | Contents |
 |---|---|
 | `game/` | The game: `index.html`, scripts in `js/`, embedded models, textures and voices in `assets/`, and three.js in `vendor/` |
 | `installer/` | The Windows installer and launcher (`Setup.cs`) and its build script |
-| `tools/` | Developer tools used to prepare the character and hand models. They need a local web server to run. |
+| `linux/` | The Linux app (`app/main.js`, an Electron shell with the Windows launcher's safeguards), the launcher and menu scripts, the .deb install scripts, and the packer (`Pack.cs`) || `tools/` | Developer tools used to prepare the character and hand models. They need a local web server to run. |
 
 ## Credits
 
-The game is built on [three.js](https://threejs.org). Third-party models, textures and voices are listed with their licences in [`game/CREDITS.txt`](game/CREDITS.txt):
+The game is built on [three.js](https://threejs.org). The Linux version runs on [Electron](https://www.electronjs.org) (MIT), whose licence and Chromium's are included in the Linux packages. Third-party models, textures and voices are listed with their licences in [`game/CREDITS.txt`](game/CREDITS.txt):
 
 - Ending characters by Grab3D (CC0)
 - First-person hand from Microsoft Rocketbox (MIT)
